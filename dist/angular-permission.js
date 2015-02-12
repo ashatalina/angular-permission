@@ -93,7 +93,17 @@
 
                 return this;
             };
+            this.defineDefaultValidationFunction = function (validationFunction) {
+                /**
+                 This method is only available in config-time, and cannot access services, as they are
+                 not yet injected anywere which makes this kinda useless.
+                 Should remove if we cannot find a use for it.
+                 **/
+                validateDefaultValidationParams(validationFunction);
+                roleValidationConfig.defaultValidationFunction = validationFunction;
 
+                return this;
+            };
             this.$get = ['$q', function ($q) {
                 var Permission = {
                     _promiseify: function (value) {
