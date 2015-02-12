@@ -159,7 +159,7 @@
                             throw new Error('undefined role or invalid role validation');
                         }
 
-                        var validatingRole = validationFunction(toParams);
+                        var validatingRole = validationFunction(toParams,currentRole);
                         validatingRole = Permission._promiseify(validatingRole);
 
                         validatingRole.then(function () {
