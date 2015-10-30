@@ -38,6 +38,7 @@
             // Note: This is a pseudo-hacky fix which should be fixed in future ui-router versions
             if (!$rootScope.$broadcast('$stateChangeStart', toState.name, toParams, fromState.name, fromParams).defaultPrevented) {
               $rootScope.$broadcast('$stateChangePermissionAccepted', toState, toParams);
+			  options = options || {};
 
               options.notify = false;
 
