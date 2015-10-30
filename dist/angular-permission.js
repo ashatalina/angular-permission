@@ -13,7 +13,7 @@
   angular.module('permission', ['ui.router'])
     .run(['$rootScope', 'Permission', '$state', function ($rootScope, Permission, $state) {
       $rootScope.$on('$stateChangeStart',
-      function (event, toState, toParams, fromState, fromParams) {
+      function (event, toState, toParams, fromState, fromParams, options) {
         // If there are permissions set then prevent default and attempt to authorize
         var permissions;
         if (toState.data && toState.data.permissions) {
@@ -39,7 +39,9 @@
             if (!$rootScope.$broadcast('$stateChangeStart', toState.name, toParams, fromState.name, fromParams).defaultPrevented) {
               $rootScope.$broadcast('$stateChangePermissionAccepted', toState, toParams);
 
-              $state.go(toState.name, toParams, {notify: false}).then(function() {
+              options.notify = false;
+
+              $state.go(toState.name, toParams, options).then(function() {
                 $rootScope
                   .$broadcast('$stateChangeSuccess', toState, toParams, fromState, fromParams);
               });
