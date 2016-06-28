@@ -10,7 +10,7 @@
 (function () {
     'use strict';
 
-    angular.module('permission')
+    angular.module('permission', ['ui.router'])
         .provider('Permission', function () {
             var roleValidationConfig = {};
             var validateRoleDefinitionParams = function (roleName, validationFunction) {
