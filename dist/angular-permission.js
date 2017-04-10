@@ -100,8 +100,8 @@
                             || Permission.roleValidations.defaultValidationFunction;
 
                         if (!angular.isFunction(validationFunction)) {
-                            window.location.reload();
-                            //throw new Error('undefined role or invalid role validation');
+                            //window.location.reload();
+                            throw new Error('undefined role or invalid role validation');
                         }
 
                         var validatingRole = validationFunction(toParams,currentRole);
