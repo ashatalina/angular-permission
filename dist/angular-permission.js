@@ -95,28 +95,28 @@
                             return deferred.promise;
                         }
                         // Validate role definition exists
+                        setTimeout(function() {
+                            var validationFunction = Permission.roleValidations[currentRole]
+                                || Permission.roleValidations.defaultValidationFunction;
 
-                        var validationFunction = Permission.roleValidations[currentRole]
-                            || Permission.roleValidations.defaultValidationFunction;
+                            if (!angular.isFunction(validationFunction)) {
+                                //window.location.reload();
+                                throw new Error('undefined role or invalid role validation');
+                            }
 
-                        if (!angular.isFunction(validationFunction)) {
-                            //window.location.reload();
-                            throw new Error('undefined role or invalid role validation');
-                        }
+                            var validatingRole = validationFunction(toParams, currentRole);
+                            validatingRole = Permission._promiseify(validatingRole);
 
-                        var validatingRole = validationFunction(toParams,currentRole);
-                        validatingRole = Permission._promiseify(validatingRole);
-
-                        validatingRole.then(function () {
-                            deferred.resolve();
-                        }, function () {
-                            Permission._findMatchingRole(roles, toParams).then(function () {
+                            validatingRole.then(function () {
                                 deferred.resolve();
                             }, function () {
-                                deferred.reject();
+                                Permission._findMatchingRole(roles, toParams).then(function () {
+                                    deferred.resolve();
+                                }, function () {
+                                    deferred.reject();
+                                });
                             });
-                        });
-
+                        },100);
                         return deferred.promise;
                     },
                     defineDefaultValidationFunction: function (validationFuntion) {
