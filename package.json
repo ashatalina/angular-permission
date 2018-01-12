@@ -1,5 +1,6 @@
 {
   "name": "angular-permission",
+  "version": "0.1.6",
   "dependencies": {},
   "devDependencies": {
     "grunt": "^0.4.5",
